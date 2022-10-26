@@ -1,0 +1,1540 @@
+\documentclass[11pt,letter
+								%,twocolumn
+								]
+								{article}
+\usepackage{listings}
+\usepackage{import}
+
+%\usepackage{tgtermes} % times font
+
+\usepackage{pdfpages}
+
+\usepackage{setspace}
+
+\usepackage{ITalo-Preamble}
+
+\usepackage{helvet}
+\renewcommand*\familydefault{\sfdefault}
+%\renewcommand{\baselinestretch}{1.5}
+\begin{document}
+%%%%%%%%%%%          PORTADA          %%%%%%%%%%%%%
+
+
+%%%%%%%%%%%          PORTADA          %%%%%%%%%%%%%
+
+\doublespacing
+%\onehalfspacing
+\begin{Large}
+
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \begin{minipage}[c][0.01\textheight][c]{0.19\textwidth}
+            \begin{center}
+                \includegraphics[width=3.5cm, height=3.5cm]{Photos/Escudo-UNAM.pdf}
+				\hspace{1cm}
+            \end{center}
+        \end{minipage}
+        \begin{minipage}[c][0.195\textheight][t]{0.75\textwidth}
+            \begin{center}
+                \vspace{0.0cm}
+                \textsc{Universidad Nacional Aut\'onoma de M\'exico.}\\[0.5cm]
+                \vspace{0.3cm}
+                \hrule height2.5pt
+                \vspace{.2cm}
+                \hrule height1pt
+                \vspace{.8cm}
+                \textsc{Facultad de Química.}
+				\vskip 1cm
+
+				\end{center}
+        \end{minipage}
+
+        \begin{minipage}[c][0.81\textheight][t]{0.18\textwidth}
+            \vspace*{5mm}
+            \begin{center}
+                \hskip2.0mm
+                \vrule width1pt height13cm
+                \vspace{5mm}
+                \hskip2pt
+                \vrule width2.5pt height13cm
+                \hskip2mm
+                \vrule width1pt height13cm \\
+                \vspace{5mm}
+                \includegraphics[height=3.5cm]{Photos/FQ.jpeg}
+            \end{center}
+        \end{minipage}
+        \begin{minipage}[c][0.81\textheight][t]{0.75\textwidth}
+            \begin{center}
+                \vspace{0cm}
+
+                {\Large\scshape Propuesta de construcción de un sistema de aereación  y acondicionamiento acoplado a un arduino para su uso en una celda de flotación a nivel laboratorio.}\\
+
+                \vspace{1.5cm}
+
+                %\textsc{\LARGE T\hspace{1.5cm}E\hspace{1.5cm}S\hspace{1.5cm}I\hspace{1.5cm}N\hspace{1.5cm}A}\\[0.5cm]
+                \textsc{\large Trabajo Escrito de Educación Continua.}\\[1cm]
+                \textsc{\large Que para obtener el t\'itulo de:}\\[1.5cm]
+                \textsc{\LARGE  Ingeniero Químico Metalúrgico.}\\[1.5cm]
+                \textsc{\Large P\hspace{1.cm}R\hspace{1.cm}E\hspace{1.cm}S\hspace{1.cm}E\hspace{1.cm}N\hspace{1.cm}T\hspace{1.cm}A}\\[2cm]
+                %\textsc{\large presenta:}\\[0.5cm]
+                \textsc{\Large {\bfseries Italo Vargas Quiroz.}}\\[1.5cm]
+
+                \vspace{0.5cm}
+
+               % {\scshape \large Tutor: \\[0.cm] {\large M en C. Antonio Huerta Cerdán}}\\[.2in]
+
+                %\vspace{0.0cm}
+
+                {\normalsize Ciudad Universitaria, CDMX, México, 2022. }
+            \end{center}
+        \end{minipage}
+    \end{titlepage}
+
+
+\end{Large}
+
+%\renewcommand{\baselinestretch}{5}
+
+
+\newpage
+\thispagestyle{empty}
+\textsc{Dedicado a mi madre, y a mi hermosa familia.}
+
+\vspace{3.333cm}
+\begin{flushright}
+	\textsc{ Estoy muy agradecido. }
+
+	\textsc{ Gracias. }
+\end{flushright}
+\newpage
+
+
+
+\thispagestyle{empty}
+
+\section*{Jurado Asignado.}
+
+
+\large{ Presidente: M. en C. Antonio Huerta Cerdán.}\\
+
+\large{Vocal: Mtro.  Juan Manuel de la Rosa Canales. }\\
+
+\large{Secretario: Dr. Faustino Juárez Sánchez.}\\
+
+\large{1º Suplente: Mtro. Herrero Terán Manuel Mariano. }\\
+
+\large{2º Suplente: IQM. Andrés Vela Avitua.}\\
+
+
+\vskip 1cm 
+
+\section*{Sitio del desarrollo del tema.}
+
+Desarrollado desde casa del autor por cuestiones sanitarias actuales  y realizado para el laboratorio de beneficio de minerales del Departamento de Ingeniería Metalúrgica de la Facultad de Química de la U.N.A.M., Ciudad Universitaria, CDMX, México.
+
+
+\vskip 1cm 
+
+
+\subsection*{Asesor del tema:}
+\large{\bfseries  M. en C. Antonio Huerta Cerdán.}\\\\
+\vskip 2cm 
+
+\subsection*{Sustentante:}
+\large{\bfseries  Italo Vargas Quiroz}\\\\
+
+\import{} {Portada.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{abstract}
+%	contenidos...
+%\end{abstract}
+
+%\begin{paracol}{2}
+
+
+%\doublespacing
+\section{Introducción.}	
+	
+%Durante cualquier proceso de flotación es necesario realizar el acondicionamiento previo  de la pulpa con el fin de mantener los sólidos en suspensión, homogeneizar y mezclar el mineral presente de tal modo que se logre  tener las condiciones óptimas para favorecer el contacto  y buscar la mayor eficiencia  con los reactivos a usar, con el propósito  de  disminuir los tiempos de flotación. Por lo que  durante   la  aereacióny acondicionamiento de la pulpa  es indispensable monitorear   las variables principales que intervienen directamente durante  el proceso, es por esto que el presente proyecto tiene como objetivo principal brindar mediciones en tiempo real de las revoluciones por minuto (RPM) de las aspas o  propelas encargadas de la agitación de dichos tanques,  y también monitorear el caudal de aire que se ingresa al sistema de aereación [L/min].
+
+
+
+
+Los procesos de flotación a nivel industrial, usualmente cuentan con equipos de mezclado aereación y acondicionamiento; cada uno de ellos con una función específica, para proporcionar a la pulpa condiciones adecuadas para promover el proceso de  flotación. La aereación es un proceso que se realiza en un tanque, mediante el cual se propicia la oxidación superficial de los minerales a través de la inyección de aire, con el objeto de obtener condiciones de fijación de los reactivos colectores sobre las partículas. El acondicionamiento es una etapa de mezclado de los minerales con los diferentes reactivos (colectores, depresores, espumantes,etc.) a través de un tanque acondicionador, con el objeto de favorecer la adsorción de los reactivos con el mineral, de tal forma que cuando la pulpa mineral es alimentada a las celdas de flotación la función primordial de la pulpa sea flotar.\\ 
+
+
+
+En la actualidad el laboratorio de Procesamiento de Minerales no cuenta con un sistema de tanques aereadores y acondicionadores que complementen la celda de flotación, sino que ambos procesos de aereación y acondicionamiento se realizan en la misma celda de flotación. Por esto mismo se propone la construcción de un tanque de aereación y uno de acondicionamiento de material de PVC controlados por un sistema arduino, el cual conste de sistema generador de aire y generador de mezclado con los correspondientes sensores que permitan el control y la medición de aire y velocidad de agitación acoplado a la computadora. Dicho sistema permitirá medir las variables mencionadas en los tanques de aereación y acondicionamiento de la pulpa, previo al proceso de flotación. Los sistemas Arduino, usan diversos microcontroladores y microprocesadores, su hardware consta de un microcontrolador conectado a una placa de circuito impreso, a la que se le pueden conectar placas de expansión (shields) a través de la disposición de puertos de entrada y salida. Las shields complementan la funcionalidad del modelo de placa empleada, agregando circuiteria, sensores y módulos de comunicación externos a la placa original. Las placas Arduino pueden ser programadas a través del puerto Serial que incorporan haciendo uso del Bootloader que traen programado por defecto. Con ello se puede llevar a cabo la medición, seguimiento, registro y control de una variable en tiempo real.
+
+
+
+
+%\subsection{Definiciones}
+%
+%Con el fin de introducir de manera correcta e informada al lector al presente trabajo se considera necesario el incluir definiciones de conceptos muy relacionados al ámbito del beneficio de minerales y algunos otros abordados a lo largo del presente trabajo.\\
+%
+%
+%\paragraph{Mineral}.\\
+%Sustancia sólida inorgánica  con contenidos metálicos de interés,  de procedencia natural.
+%
+%
+%
+%\paragraph{Ley}.\\
+%Proporción del mineral la cual es de interés por sus contenidos metálicos.
+%
+%
+%\paragraph{Pulpa}.\\
+%Fluido que contiene el mineral en diferentes 
+%
+%\paragraph{Tanque acondicionador}.\\
+% Tanque encargado de  mantener los sólidos en suspensión, homogeneizar,mezclar el mineral presente y favorecer  o modificar las condiciones superficiales, para optimizar la recuperación por flotación.
+%\paragraph{Tanque aereador}.\\
+%Tanque encargado de permear el líquido presente  con aire.  Ya sea por burbujeo directo o bien agitando el líquido para que retenga el aire disponible en la superficie.
+%
+%\paragraph{Colector}.\\
+%Sustancia  químico capaz de  promover la adhesión del mineral a la burbuja de aire.  Generalmente provocando la hidrofobicidad de dichas partículas 
+%
+%\paragraph{Flotación}.\\
+%Proceso Físico-Químico   capaz de realizar la separación selectiva  de minerales mediante la adhesión de partículas a burbujas  de aire,  con la ayuda de agentes químicos.
+%
+%
+%
+%
+%\paragraph{Propela}.\\
+%Sinónimo  de hélice de cualquier motor.
+%
+%
+%
+%\paragraph{Caudal de aire y sus Unidades}.\\
+%Es un indicativo de la cantidad de aire que pasa por un conducto,  este se puede expresar en diferentes unidades  ya sea $m^3/min $,$m^3/h $ o la mas común $L/min $
+%
+%\paragraph{Hidrofóbico}.\\
+%Cualidad de las sustancias,  para no ser miscibles en agua .
+%
+%\paragraph{Hidrofílico}.\\
+%Cualidad de las sustancias,  de ser afín al agua.
+%
+%\newpage
+%
+
+\section{Antecedentes}
+			\subsection{Flotación.}
+
+
+			
+
+Las bases  del proceso de flotación se desarrollaron en el procesamiento de minerales, ya que durante muchos años se han extraído de diferentes pulpas los concentrados de interés   mediante el uso de este método Físico - Químico  de separación eficaz.\cite{1} \\
+
+Las  aplicaciones de la flotación incluyen no solo la separación de minerales sino se extiende hasta   el tratamiento de aguas residuales, carbón, arcillas, maíz, resinas, proteínas, grasas, caucho, tintes, vidrio, plásticos, jugos de frutas, azúcar de caña, etc.\cite{2}
+
+Al enfocarme   en  la aplicación para una celda de  aereación  y acondicionamiento para minerales se retoma solo una parte del gran alcance que tiene la flotación en la ingeniería. \\ 
+
+
+La clave para la flotabilidad (o no flotabilidad) de los minerales y, por lo tanto, para su separación por flotación es si el sólido es hidrófobo o bien  quizás hidrófilo. Sin embargo la  gran mayoría de los minerales son hidrófilos en diversos grados y necesitan tratamientos previos  para hacerlos flotables. 
+
+Este  grado de hidrofobicidad  que presentan los  minerales se puede controlar mediante la acción química superficial directa de los reactivos de flotación, que pueden ser colectores, espumantes, activadores o depresores. Esto quiere decir que cualquier mineral puede volverse hidrófobo mediante la adsorción del tensoactivo apropiado, por lo que los grupos polares en la superficie del mineral se eliminan y se cubren con grupos apolares. Este principio tiene dos consecuencias:\cite{1}\\
+
+1. Las superficies débilmente polares necesitan sólo unos pocos grupos apolares unidos para hacerlas flotables.\cite{1}\\
+
+2. Cuanto más grande (o más larga) sea la parte no polar de una molécula de tensoactivo, más fuerte será la hidrofobicidad que impartirá cuando se adsorba.\cite{1}\\
+
+Las principales variables durante este proceso son el porcentaje de sólidos en peso, la granulometría del mineral, concentración de los reactivos,  agitación y flujo de aire. En la presente propuesta  se monitorearán  en tiempo real  estas dos últimas variables  para aumentar  el control y monitoreo del proceso.  \\
+
+
+
+\subsubsection{La importancia de los sistemas de aereación y acondicionamiento. }
+
+Los sistemas de aereación y acondicionamiento  son de vital importancia ya que favorecen la recuperación de los concentrados de interés durante los procesos de flotación. Por esto mismo es recomendable que durante  cualquier proceso de este tipo se realice   el acondicionamiento previo  de la pulpa con el fin de mantener los sólidos en suspensión, homogeneizar y mezclar el mineral presente de tal modo que se logre  tener  las condiciones óptimas para favorecer las 
+interacciones mineral-reactivo y
+%condiciones superficiales necesarias en algunos minerales  para mejorar las interacciones      y
+ buscar la mayor eficiencia  con dichos reactivos, para  así favorecer  la recuperación de los concentrados de interés durante el proceso. \\
+
+Esto se ha demostrado en diferentes y bastos  artículos, de los cuales mencionaré  a continuación solo una pequeña parte de todos los trabajos relacionados con la importancia de sistemas de aereación y acondicionamiento.\\
+
+
+
+%\paragraph{C.Gutiérrez - 1976}
+
+El autor C.Gutiérrez \cite{art1}  describe el efecto de la implementación de  sistemas de aereación para un mineral 
+de ilmenita, a través del cual optimizó  satisfactoriamente la recuperación por flotación de este mineral,%con ácido oléico
+, mediante el uso de un  sistema de aereación, donde el principio de funcionamiento es que al promover la oxidación (superficial)  de las partículas de hierro presentes, los cuales al tener una baja solubilidad  promueven la flotación de los minerales de hierro. \\
+
+La experimentación que el autor realizó  para demostrar esto fue dar el tratamiento a las muestras de ilmenita al limpiarla mediante el uso de piridina y secada al horno.\\
+Posteriormente para las pruebas en la influencia de la aereación previa a la recuperación por flotación, indica que se pesaron 10 gramos de ilmenita + 10 ml de agua destilada donde fue aereada en  un  filtro de vidrio (fritted glass filter) con poros muy finos con aire limpio, mientras la pulpa es agitada con una mosca magnética a la velocidad mínima posible con fin de no tener efectos de desgaste entre las partículas.\\
+
+La ilmenita fue trasferida a una celda de acondicionamiento, donde se ajustó el \% de sólidos al 75\%, para posteriormente incorporar  los reactivos, $0.1005   g/kg $ de ácido oléico puro, y acondicionando  durante 10 minutos, para posteriormente ser sometida a flotación. Obteniendo los siguientes resultados. \cite{art1}\\
+
+
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.35]{Photos/Art1}
+\caption{Influencia de la aereación previa en la recuperación por flotación de ilmenita con lote 17.2.71d, con 0.1005g/kg de ácido oléico puro.\cite{art1} } 
+\label{1}
+\end{figure}
+
+La figura \ref{1}  muestra la siguiente información:\\
+
+$o$, Adsorción en lo flotado   ;
+
+ $\bullet $, Recuperación por flotación  ; 
+
+ $\Box $, Adsorción en lo no flotado ;\\
+
+
+Donde es evidente que la aereación previa de la pulpa aumenta la recuperación de flotación, mientras que decrece la adsorción del ácido oléico por unidad de peso de la ilmenita flotante, en otras palabras, el colector se distribuye más uniformemente sobre el mineral.\cite{art1}, cabe mencionar que  en el artículo citado también se realizó la  experimentación acondicionando el  mineral a una previa exposición a aire caliente, el cual también favorece la recuperación por el mismo principio  durante la flotación. Sin embargo, se concluye que la previa aereación incrementa significativamente los porcentajes de recuperación durante un proceso de flotación, al transformar los óxidos ferrosos a férrico, que a su vez tuvo como consecuencia incrementar la adsorción del ácido oléico en el mineral, adoptando una menor solubilidad en la superficie  del Fe (III) o férrico en comparación al Fe(II) o ferroso. \cite{art1}\\
+
+
+
+%\paragraph{Mesa, et al - 2020}
+
+
+
+Por otro lado otro de los artículos de los cuales se tomaron como base principalmente en el diseño del presente sistema de acondicionamiento (agitación), es titulado ``The effect of impeller-stator design on bubble size: Implications for froth T stability and flotation performance'',escrito por Mesa\cite{Art2}, en el cual trata el efecto e importancia que tienen las diferentes tipos de propelas o impulsores utilizados comúnmente en los tanques acondicionadores o de flotación, al ser uno de los factores clave para lograr mantener las partículas en suspensión,  promover la interacción/colisiones  entre las burbujas y las  partículas, también puede tener un efecto contraproducente al afectar el régimen turbulento generado por la propela en movimiento a la interfaz pulpa-espuma, desestabilizando la parte inferior de la espuma y afectando directamente al proceso de flotación.\\
+
+Por lo que Mesa \cite{Art2} se enfocó en el efecto que tiene el diseño de diferentes tipos de propelas, a diferentes flujos de aire con el objetivo de determinar cambios en los tamaños de burbuja en la pulpa, estabilidad de la espuma y recuperación de los concentrados metalúrgicos.  Con esto los investigadores propusieron   una manera en cuantificar la reducción del tamaño de las burbujas en un sistema de flotación trifásico y la mejora en la estabilidad de la espuma debido al uso de un estátor, esto con en el uso de diferentes diseños en las propelas.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.3]{Photos/Propelas}
+\caption{Esquema de los impulsores y estator utilizados, Figura modificada de Mesa y Brito-Parada (2020).\cite{Art2}} 
+\label{Propelas}
+\end{figure}
+
+
+
+Los diferentes diseños se muestran en la figura \ref{Propelas}, las dimensiones de las mismas son:\\
+(a) la turbina Rushton, con D = 160 mm de diámetro y W = 32 mm de altura;\\
+(b) el rotor, con D = 160 mm de diámetro y W = 91 mm de altura; \\
+(c) el estator, con Di = 180 mm de diámetro interior, De = 240 mm de diámetro exterior y W = 150 mm de altura. \\
+
+Al analizar el efecto del diseño de la propela en el tamaño de la burbuja, se realizó por cada uno de los diseños a diferentes velocidades  superficiales de la inyección del gas a :$ 0.3, 0.5 $ y $ 0.7 cm s^{-1}$, en general muestra que  el tamaño de la burbuja aumenta con la velocidad superficial del gas para todos los diseños estudiados, además se observa que el tipo de impulsor cambia la pendiente de la curva $d_{32} vs J_{g}$, otro dato interesante es que el uso de un estator da como resultado una reducción del diámetro medio de la burbuja para ambos tipos  de propelas/impulsores estudiados .\\
+
+Al analizar los resultados obtenidos se observó  en un gráfico (Diámetro medio de burbuja de Sauter (d32) versus velocidad superficial del gas (Jg) .\cite{Art2}) presentado por el autor que aquel con el menor diámetro de burbuja  ya sea con o sin estator es el Rushton (figura \ref{Propelas} (a)).
+
+
+
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.38]{Photos/GArt2}
+%\caption{Diámetro medio de burbuja de Sauter (d32) versus velocidad superficial del gas (Jg) .\cite{Art2}} 
+%\label{GArt2}
+%\end{figure}
+
+%En la figura \ref{GArt2} se muestran los resultados para los diferentes diseños de impulsor: turbina Rushton, rotor, turbina Rushton con estator y sistema rotor-estator. Los experimentos se realizaron por triplicado. Las barras de error representan dos desviaciones estándar.\cite{Art2}\\
+
+Otro efecto analizado es  la recuperación de aire  comparando los dos tipos de propelas con o sin estator presentando los resultados en la figura \ref{G2Art2} donde se puede destacar un incremento en la recuperación de aire para el uso de propela tipo `` Rushton''  sin estator  en comparación al de tipo ``Rotor''\\ 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.32]{Photos/G2Art2}
+\caption{Recuperación de aire versus velocidad superficial del gas (Jg) para los diferentes diseños de impulsor, con y sin estator. \cite{Art2}} 
+\label{G2Art2}
+\end{figure}
+
+En la figura \ref{G2Art2} los puntos representan la recuperación de aire promedio obtenida para cada diseño de impulsor. Las barras  representan el error estándar de la media y el  área sombreada representa el intervalo de confianza del 95\% de la curva ajustada. Las flechas negras muestran la variación en $J_{g}$.\cite{Art2}\\
+
+
+Otro gráfico mostrado por los investigadores es el que representa el \% de recuperación de  aire vs el diámetro promedio para los diferentes diseños de las propelas/impulsores propuestos los cuales se muestran en la figura \ref{G3Art2}
+
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.33]{Photos/G3Art2}
+\caption{Recuperación de aire vs diámetro medio de burbuja Sauter para los diferentes diseños de impulsor  \cite{Art2}} 
+\label{G3Art2}
+\end{figure}
+
+En la cual los puntos representan el $d_{32} $ promedio obtenido para cada $ J_{g}$ . Las barras de error representan dos desviaciones estándar para el tamaño de la burbuja y el error estándar de la media para la recuperación de aire. El área gris representa el intervalo de confianza del 95\% de la predicción después de un ajuste exponencial. Las flechas negras muestran variación en $ J_{g}$.\\
+
+
+
+Donde cabe destacar que el diseño que obtuvo un \% de recuperación de aire mayor y un diámetro más pequeño fue el ''Rushton - Stator''.\\
+
+
+Los autores  encontraron una relación inversa entre el tamaño de la burbuja de la pulpa y la estabilidad de la espuma, también se muestra que los diseños de impulsores que exhibieron tamaños de burbujas más pequeños dieron como resultado valores de estabilidad de espuma más altos y también recuperaciones de flotación más altas, destacando el uso del tipo Rushton  siendo el óptimo  y propuesto en el presente, sin estator(por costos) y con posibilidad de implementar en el futuro para obtener el mejor desempeño. \\
+
+Basado en lo anterior se propone construir  el sistema de agitación de la presente propuesta observando los resultados a escala en la figura \ref{D1}.\\
+
+
+
+%\paragraph{Medina et  al - 2018}
+
+Otro de los trabajos donde  los autores realizan experimentación con el objetivo principal de evaluar el acondicionamiento por separado de 3 muestras de minerales sulfurados de cobre con distintas leyes de este metal. De los cuales se experimentó al cambiar las razones de dosificación de los reactivos de flotación ( 1:1, 1:2, 1:3 y 1:4 ).\\
+Obteniendo como resultados que las pruebas de flotación realizadas a las tres muestras de minerales, se obtuvo un incremento considerable en la recuperación de cobre, molibdeno y hierro al realizar el acondicionamiento por separado. \cite{Art3}\\
+
+
+
+%\paragraph{Owusu et  al - 2014}
+
+Un artículo que abordan el problema de la remolienda usada para aumentar el grado de liberación,  en algunos minerales como la calcopirita, la cual tiene como consecuencia  una deficiencia en el proceso de flotación.\\
+
+Del cual demuestran que estos efectos pueden ser parcialmente eliminados mediante el uso del proceso de aereación previa de la pulpa. Observando un aumento en la recuperación durante la flotación, el cual atribuyen a la formación superficial de las condiciones más favorables para la absorción del Xantato.\cite{Art4}. Corroborando una vez más la importancia de una etapa de aereación previa.\\
+
+
+
+%\paragraph{Yang and Aldrich - 2006}
+
+
+Por otro lado, Yang and Aldrich   evalúa los efectos de el grado de aereación y la agitación  en concentrados de mineral  sulfurado. Donde encontraron una relación lineal entre la recuperación de agua y el arrastre de sólidos. Mencionando que se tiene un máximo en la recuperación de sulfuros a un flujo de 4 L/min y una velocidad de agitación de 1500 RPM, el cual está estrechamente relacionado con el área superficial de la burbuja como lo indica \cite{Art5}. \\Destacando la importancia del control del flujo de aire suministrado al sistema como el control de la agitación del mismo.
+
+		\subsection{Arduino.}
+
+Arduino es una plataforma enfocada en  la electrónica tanto de  hardware y software de código abierto, caracterizados por su facilidad de uso y de modificación. Existen diferentes tipos de placas / microcontroladores los cuales son programados en el lenguaje de programación  propio de Arduino, y en su IDE basado en Processing. A lo largo de los años ha sido usado como el  principal controlador o cerebro de muchos proyectos de cualquier índole, ya sea monitorizando alguna variable con la ayuda de un sensor o una simple señal, hasta controlar motores y maquinaria compleja en general.\cite{Ardquees}\\
+
+
+Arduino nació en el Ivrea Interaction Design Institute como una herramienta fácil para la creación rápida de prototipos, dirigida a estudiantes sin experiencia en electrónica y programación. Mientras que fue llegando a más personas, las necesidades fueron cambiando desde placas simples de 8 bits hasta productos para aplicaciones de IoT, wearables, impresión 3D y entornos integrados.\cite{Ardquees}\\
+
+Todas las placas Arduino son completamente de código abierto, esto nos da una gran ventaja ya que  permite a los usuarios construirlas de forma independiente  y con sus propios recursos y hasta realizar adaptaciones que se acoplen mejor a sus necesidades  particulares. El software  de igual forma  es de código abierto lo que implica que cualquiera puede acceder a realizar modificaciones  lo que se ve reflejado en un  constante crecimiento gracias a las contribuciones  de usuarios en todo el mundo al integrarlo en proyectos como en el presente, véase Figura 5.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.7]{Photos/Arduino1}
+\caption{Placa Arduino UNO \cite{ArduinoWeb}. } 
+\label{ArduinoUNO}
+
+\end{figure}
+
+
+\subsubsection{Ventajas.}
+\paragraph{Económico. }
+Por las razones antes mencionadas estas  placas Arduino son relativamente económicas en comparación con otras plataformas de microcontroladores que se encuentran en el mercado, una de las principales razones por la cual se optó por utilizar una versión no autentica disminuyendo aún más los costos. 
+
+\paragraph{Multiplataforma.}
+El software Arduino (IDE) se ejecuta en los sistemas operativos Windows, Macintosh OSX y Linux.  Lo contrario a la mayoría de los sistemas de microcontroladores están limitados a Windows.
+
+\paragraph{Sencillez.}
+
+El entorno de programación es sencillo  e intuitivo lo que permitió ser una ventaja para  personas nuevas en este ámbito.
+
+\paragraph{Software de Código abierto y extensible. }
+
+Al ser de código abierto y extensible  permite que  se    puedan realizar expansiones a través de otro tipo de  bibliotecas  como por ejemplo de C++, y dando la oportunidad en comprender los detalles técnicos del  lenguaje de programación AVR-C en el que se basa con la posibilidad de modificarlos.% De igualforma, da la posibilidad de  agregar código AVR-C directamente en los programas Arduino creados.
+
+\paragraph{Hardware de código abierto y extensible. }
+
+Los planos y esquematicos oficiales de las placas Arduino se publican bajo una licencia de Creative Commons de carácter público, lo que permite realizar diseños adaptables y realizar su propia versión de este módulo hasta tener la posibilidad de ampliarlo o mejorarlo.
+
+
+
+\subsubsection{Arduino UNO. }
+El Arduino UNO (figura \ref{ArduinoUNO})  es caracterizada por ser la  más común de su clase, ésta se conforma de  principalmente un microcontrolador basado en ATmega328P, esta placa cuenta con  14 pines de entrada y/o  salida digital, 6 entradas analógicas en resonador cerámico de 16mHz (véase figura \ref{6} ), cuenta con conexión USB, uno para la alimentación externa, soporte para conexión ICP y un botón de reinicio. La placa Uno y la versión 1.0 de Arduino Software (IDE) fueron las versiones de referencia de Arduino, ahora evolucionadas a versiones más recientes. La placa Uno es la primera de una serie de placas USB Arduino y el modelo de referencia para la plataforma Arduino.\cite{UNIT1}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.4]{Photos/ArduinoPinOut}
+\caption{Arduino UNO PinOut \cite{ArduinoWeb2}. } 
+\label{6}
+\end{figure}
+
+
+\subsubsection{IDE.} 
+El entorno de desarrollo por sus siglas en ingles Integrated  Development  Environment, nos permite  la comunicación y la  programación de cualquier tipo de Arduino al reunir  herramientas útiles y accesibles que simplifican el desarrollo y la  implementación del código en la placa, el cual fue utilizado durante el desarrollo de la presente propuesta.
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=.99]{Photos/IDE}
+\caption{Entorno de desarrollo integrado (IDE) Arduino.   } 
+\label{IDE}
+\end{figure}
+
+Como podemos observar (figura \ref{IDE}) la estructura principal del código se separa en dos, la primera es un Setup, la cual   se llama cuando se inicia el sketch. Es usado  para inicializar variables, modos de pin, comenzar a usar bibliotecas, etc. Por otro lado  cabe destacar que  la función setup  solo se ejecutará una vez, después de cada encendido o reinicio de la placa Arduino. La segunda función que se utiliza en el IDE de arduino es   loop   la cual hace precisamente lo que sugiere su nombre, y se repite consecutivamente de manera infinita, es aquí donde se escriben y especifica el código que define  la secuencia de instrucciones por ejemplo en el presente fue necesario utilizar interrupciónes, cálculo de variables, ciclos, comunicación con LCD y serial, entre otras (véase anexo B y C ).
+
+
+
+\subsubsection{Interrupciones en Arduino. }
+
+
+
+Esta es una función de Arduino la cual es capaz de  detectar eventos de forma inmediata interrumpiendo el flujo natural del programa (función loop()), esta función será de especial importancia en la base del código desarrollado a lo largo del presente.\\
+
+Para poder usarla  solo es necesario al declarar la función indicar el pin al cual se detectará la interrupción, por ejemplo, si se conecta al pin 2 (utilizado en el presente), use ``digitalPinToInterrupt (2)'' como primer parámetro para attachInterrupt ().(véase su uso en el anexo B y C )\\
+
+Cabe destacar que no  todos los pines pueden ser utilizados para recibir interrupciones, esto varía dependiendo de la placa que se esté utilizando, 
+para el caso de los modelos más comunes los cuales son: UNO, NANO o MINI se utilizan los pin  ¨1¨ y ¨2¨ \cite{TInterrup} .%observándose a continuación una tabla con los pines usados para las interrupciones para cada placa. 
+
+
+
+%\begin{table}[H]
+%\caption{Pines digitales usados para interrupciones, según cada placa\cite{TInterrup}  }
+%\centering
+%\includegraphics[scale=.35]{Photos/TInterrup}
+% 
+%\end{table}
+
+Las interrupciones son útiles para hacer que las cosas sucedan automáticamente en programas de microcontroladores y pueden ayudar a resolver problemas de sincronización. Las buenas tareas para usar una interrupción pueden incluir leer un codificador rotatorio o monitorear la entrada del usuario.\\
+Si quisiera asegurarse de que un programa siempre capte los pulsos de un codificador rotatorio, de modo que nunca pierda un pulso, sería muy complicado escribir un programa para hacer cualquier otra cosa, porque el programa necesitaría sondear constantemente el sensor líneas para el codificador, con el fin de capturar pulsos cuando ocurran. Otros sensores también tienen una dinámica de interfaz similar, como intentar leer un sensor de sonido que intenta captar un clic, o un sensor de ranura de infrarrojos (fotointerruptor) que intenta captar la caída de una moneda. En todas estas situaciones, el uso de una interrupción puede liberar al microcontrolador para que realice algún otro trabajo sin perder la entrada.\cite{apard}\\
+\newpage
+\paragraph{Parámetros.}
+
+Existen 5 modos predefinidos por la función los cuales son:\\
+
+\begin{enumerate}
+\item LOW : Activa la interrupción cuando el pin está en bajo \\
+\item CHANGE: Activa la interrupción siempre que el pin cambie de valor \\
+\item RISING: Activa la interrupción cuando el pin va de un estado 'bajo' a uno 'alto'\\
+\item FALLING: Activa la interrupción cuando el pin va de un estado 'alto' a uno 'bajo'\\
+\item HIGH: Activa la interrupción siempre que el pin este en estado alto \cite{TInterrup} 
+\end{enumerate}
+
+
+	\subsubsection{Sensores y su clasificación. }
+
+
+En esta sección se abordan tópicos indispensables de conocer entorno a los sensores utilizados a lo largo del presente. \\
+Un sensor es un dispositivo capaz de detectar magnitudes físicas o químicas, llamadas variables de instrumentación, y transformarlas en variables eléctricas.
+Las variables de instrumentación pueden ser por ejemplo: temperatura, intensidad lumínica, distancia, aceleración, inclinación, desplazamiento, presión, fuerza, torsión, humedad, movimiento, pH, etc.\cite{serna2010guia}\\
+%Una magnitud eléctrica puede ser una resistencia eléctrica (como en una RTD), una capacidad eléctrica (como en un sensor de humedad o un sensor capacitivo), una tensión eléctrica (como en un termopar), una corriente eléctrica (como en un fototransistor), etc.\\
+
+Los sensores se pueden clasificar en función de los datos de salida en: Digitales  y Analógicos\\
+
+Cabe señalar qué dependiendo del tipo de sensor, deberemos conectarlo a una entrada digital o analógica de la placa Arduino que se utilice.
+\begin {itemize}
+
+\item Dentro de los sensores digitales: Estos proporcionan la información mediante una señal digital la cual puede ser un ``0'' o bien un ``1''.\cite{serna2010guia}\\
+
+\item Los sensores Analógicos nos brindan la información mediante señal analógica reflejándose en cambios en tensión o corriente, implicando una infinidad de valores posibles entre un límite máximo y un mínimo. \cite{serna2010guia}
+
+Un ejemplo de sensor analógico sería el ACS714, es un sensor de efecto hall que mide las corrientes eléctricas que pasan a través del chip y devuelve un valor en voltaje proporcional a la corriente que circula por el sensor.
+\end{itemize}
+	%\cite{cengel2007transferencia}
+	%tex %\footnote{text}
+	
+%\newpage
+
+\subsubsection{Funcionamiento de LCD.}
+Para poder utilizar un LCD que en este caso será de 16x2 (aplica para cualquier tamaño) es necesario  usar una librería de Arduino la cual lleva por nombre  LiquidCrystal   está diseñada especialmente para este tipo de displays (compatibles con controlador  Hitachi HD44780) generalmente son caracterizados por su interfaz de 16 pines.\\
+
+Se dice que los LCD tienen una interfaz paralela lo que se traduce en  que el microcontrolador tiene que manipular varios pines de interfaz a la vez para controlar la pantalla. La interfaz de un LCD típico de tamaño 16x2  consta de los siguientes pines véase figura \ref{8}:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1.2]{Photos/LCDPin}
+\caption{Diagrama típico de pines correspondiente a un  LCD 16x2 \cite{ATuto}  } 
+\label{8}
+\end{figure}
+
+
+\begin{itemize}
+\item Un pin de selección de registro (RS) que controla en qué parte de la memoria de la pantalla LCD está escribiendo datos. Puede seleccionar el registro de datos, que contiene lo que aparece en la pantalla, o un registro de instrucciones, que es donde el controlador de la pantalla LCD busca instrucciones sobre qué hacer a continuación.\\
+
+\item Un pin de lectura / escritura (R / W) que selecciona el modo de lectura o el modo de escritura\\
+
+\item Un pin de habilitación que permite escribir en los registros\\
+
+\item 8 pines de datos (D0 -D7). Los estados de estos pines (alto o bajo) son los bits que está escribiéndo en un registro cuando escribe, o los valores que está leyendo cuando lee.\\
+
+\item También hay un pin de restricción de pantalla (Vo), pines de fuente de alimentación (+ 5V y Gnd) y pines de retroiluminación LED (Bklt + y BKlt-) que puede usar para encender la pantalla LCD, controlar el contraste de la pantalla y encender y apagar el LED retroiluminación, respectivamente.\cite{LCDinfo}\\
+
+\end{itemize}
+
+
+
+Para poder controlar la pantalla es necesario colocar los datos que forman la imagen de lo que desea mostrar en los registros de datos y luego colocar las instrucciones en el registro de instrucciones. LiquidCrystal Library simplifica esto para que no necesite conocer las instrucciones de bajo nivel y mediante funciones específicas (Anexo B y C) poder imprimir informacion en este tipo de displays.\\
+Las pantallas LCD compatibles con Hitachi se pueden controlar en dos modos: 4 u 8 bits. El modo de 4 bits requiere siete pines de Entradas / Salidas  del Arduino, mientras que el modo de 8 bits requiere 11 pines.\cite{ATuto} Para mostrar texto en la pantalla, puede hacer casi todo en el modo de 4 bits, por lo cual se propone el ahorro   del gasto en un módulo en IC2 y se maneja toda la propuesta en modo de  4 bits, brindando los mismos resultados a un menor costo. \\
+
+
+\newpage
+
+
+
+\subsubsection{Funcionamiento sensor efecto Hall.}
+
+
+Cualquier tipo de sensor de efecto hall se basa en el efecto que lleva su nombre, su principal utilidad es la detección de campos magnéticos o corrientes eléctricas.
+
+%Este sensor  se basa en el efecto hall que lleva su nombre, usándolo para la medición y/o detección de campos magnéticos  o corrientes eléctricas, ya sea para conocer la posición de un objeto respecto al mismo sensor.\\
+
+
+
+Este se basa en que si fluye corriente por un sensor Hall y se aproxima a un campo magnético que fluye en dirección vertical al sensor, entonces el sensor crea un voltaje saliente proporcional al producto de la fuerza del campo magnético y de la corriente.\\
+
+Dentro de los sensores de efecto Hall se pueden encontrar dos tipos básicos en el mercado:\\
+\begin{itemize}
+\item [-]Analógicos: Estos brindan la información mediante señal analógica reflejándose en cambios en tensión o corriente, implicando una infinidad de valores posibles entre un límite máximo y un mínimo. \cite{serna2010guia}\\
+
+\item [-]Digitales:  Proporcionan la información mediante una señal digital la cual puede ser un ``0'' o bien un ``1''.
+\end{itemize}
+
+Teniendo una sub división en tipo Latch y tipo Switch.
+
+\begin{itemize}
+\item Latch: los de este tipo se activan al acercar un y mantienen su valor a la salida hasta que se acerca el polo contrario.\\
+
+\item Switch: en estos otros, no se mantendrá la salida, se desactivan al retirar el polo. No es necesario acercar el polo contrario para que la salida cambie.\\
+\end{itemize}
+
+\newpage
+
+En este caso por la necesidad de uso se propone usar  un sensor  ``Digital'' tipo ``switch'' por lo que se opta  el módulo completo modelo KY-003  el cual se muestra a continuación :\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.3]{Photos/Hall}
+\caption{Módulo de sensor de efecto Hall KY-003. \cite{hallunit}} 
+\end{figure}
+ 
+
+
+ %\newpage
+EL cual tiene las siguientes características :
+\begin{itemize}
+
+\item Voltaje de funcionamiento: 3.3V a 5V.
+\item Consumo de Corriente: Reposo: 3 mA. Funcionamiento: 8mA.
+\item Tipo: Sensor magnético de (Efecto Hall)
+\item Transistor del sensor: 3144.
+\item Señal de salida: Digital.
+\item Rango de temperatura de funcionamiento: -25 °C a 85 °C.
+\item Dimensiones 18mm x 15mm.
+\item Peso: 1 g.
+
+\end{itemize}
+
+\newpage
+\subsubsection{Funcionamiento de Sensor YF-S401. }
+
+Al ser de la familia de Caudalímetros es un instrumento para la medición de caudal o flujo  volumétrico de un fluido por unidad de tiempo. Como bien se indica el caudal es la cantidad de líquido o fluido (volumen) que circula a través de una tubería por unidad de tiempo,  esta unidad se puede expresar en diferentes unidades sin embargo por lo general se expresa en: litros por minutos (l/m), litros por hora (l/h), metros cúbicos por hora (m³/h), etc. Los caudalímetros suelen colocarse directamente en la tubería que transporta el fluido. También suelen llamarse medidores/sensores de caudal, medidores de flujo o flujómetros. \\
+
+El sensor de flujo de agua de 1/4'' YF-S401 sirve para medir caudal de agua en tuberías de 1/4'' de diámetro. También puede ser empleado con otros líquidos de baja viscosidad, como: bebidas gasificadas, bebidas alcohólicas, combustible, etc. Este es un caudalímetro electrónico de tipo turbina. Compatible con sistemas digitales como Arduino, Pic, Raspberry Pi, PLCs. El sensor posee  tres cables: rojo (VCC: 5VDC), negro (tierra) y amarillo (salida de pulsos del sensor de efecto Hall).\cite{t1}\\
+
+A pesar de no ser específicamente para la medición de aire (sistema de aereación), en el presente se tiene como propósito realizar la calibración para que este pueda funcionar para tales fines.
+%, ya que por cuestiones técnicas  no fue posible adquirir un sensor especifico para este fin. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.45]{Photos/YF}
+\caption{Caudalímetro YF-S401 \cite{t1}}
+\end{figure}
+
+Este sensor se basa  en el mismo principio hall, por lo que su funcionamiento puede apreciarse  en la  figura \ref{YFE} : 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.5]{Photos/YFE}
+\caption{Esquema de funcionamiento del Caudalímetro YF-S401\cite{i1}}
+\label{YFE}
+\end{figure}
+%\newpage
+Como se puede observar este sensor  relaciona las vueltas de la hélice  que provoca el flujo del fluido, con la cantidad de fluido que pasa por unidad de tiempo. \\
+
+Las especificaciones técnicas del sensor son:
+
+
+\begin{itemize}
+\item Tipo de sensor:  Efecto Hall
+\item Rango de medición:1 a 30 litros/minuto
+\item Voltaje de alimentación: 5 a 24 VDC
+\item Corriente de operación: 15mA @ 5 VDC
+\item Presión máxima: 2.00 MPa
+\item Temperatura de operación: -25 a 80 grados centígrados
+%\item Precisión: +/- 10\%
+%\item Ciclo de trabajo de la señal de salida: 50\% +/- 10\%
+%\item Característica de la señal de salida: Frecuencia = 7.5 * Caudal (litros/minuto)
+\item Longitud del cable: 15 centímetros
+\item Distribución de conexiones: Rojo-voltaje positivo (+), negro-tierra o común (-), amarillo-señal de salida
+\item Conexión para tubería estándar de 1/4 pulgada
+\item Modelo: YF-S401
+\end{itemize}
+
+\newpage
+	\section{Hipótesis. }
+	
+
+Será posible contar con un % el  diseño y la metodología a seguir en el desarrollo de  
+tanque de aereación y uno de acondicionamiento que permita  medición de la velocidad de agitación y flujo de aire a través de un componente del tipo arduino, con sensores acoplados a un ordenador para su aplicación y optimización  posterior en el proceso de flotación.
+
+\section{Objetivos.}
+	
+
+
+	\begin{itemize}
+		\item  Proponer el diseño y construcción  de un sistema de tanques de aereación y acondicionamiento que permitan complementar y optimizar la etapa de flotación del equipo que se encuentra en el laboratorio de Procesamiento de Minerales en dicha facultad.
+\item Proponer un sistema de medición de flujo de aire y velocidad de agitación a través de la incorporación de un dispositivo arduino asociado a elementos de medición (sensores) de bajo costo, acoplado a un ordenador.
+\item Desarrollar el programa que permita interactuar la comunicación serial entre el computador y el sistema arduino con sensor para la variable en estudio.
+
+	\end{itemize}
+
+
+	
+	\section{Metas.}
+\begin{itemize}
+\item  Manejo y diseño de procesos de acoplamiento de tanque de acondicionamiento y tanque de aereación con sistema arduino.
+\item  Diseño de  dispositivos de medición de flujo de aire y velocidad de agitación arduino-sensor-ordenador en tiempo real .
+\end{itemize}
+
+\newpage
+
+\section{Desarrollo experimental.}
+
+Se muestra a continuación en la figura \ref{DiagDE} un diagrama de flujo donde se aprecia  la secuencia de pasos  realizada en el presente trabajo.
+
+%Para facilitar al lector a continuación se anexa a en la figura \ref{DiagDE} un diagrama de flujo  cronológico  el cual es  la propuesta de el desarrollo para obtener el sistema de aereacióny acondicionamiento.  \\
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.42]{Photos/DiagDE}
+\caption{Desarrollo experimental.}
+\label{DiagDE}
+\end{figure}
+
+
+
+
+
+
+
+\subsection{Búsqueda de información bibliográfica.}
+
+Como bien se indica se inició con la búsqueda profunda de información bibliográfica, la cual corresponde a los artículos citados en la introducción del presente, o bien información respecto a hardware y software Arduino,   principalmente en la página oficial de Arduino \cite{ArduinoWeb}, tanto para conocer las características de la placa UNO, como la sintaxis y distribución del lenguaje de programación que permitan tener las bases para desarrollar el código computacional para  el correcto monitoreo de la variable de estudio en tiempo real.\\
+
+Así como en fuentes de terceros (fabricantes y/o distribuidores ) que permitían conocer el DataSheet de los sensores a utilizar en el futuro desarrollo de esta propuesta.  \\
+
+
+
+\subsection{Propuesta de selección  de material.}
+
+Continuando con la  propuesta, en la selección  del material para el sistema completo de aereación y acondicionamiento, incluyendo sensores, microcontroladores, herramienta, y todo el material mostrado en el apéndice D del presente, junto con los costos estimados para tener en cuenta en el presupuesto asignado. 
+
+
+
+Durante esta etapa se propone  mandar a hacer en torno  una de  las piezas más importantes como lo es el eje y las aspas  de tamaño y de material adecuado (Ac. Inoxidable 303) para evitar la oxidación por las condiciones de trabajo, encargados de la agitación. \\
+
+
+
+Para asegurar que funcionarán los materiales propuestos  se procedió al armado  en un  protoboard como primer prototipo de pruebas de los elementos  de medición (sensores), displays y comunicación serial, para verificar primeramente su funcionamiento a la par del desarrollo de código computacional el cual permitirá monitorear en tiempo real las variables de estudio.\\
+
+
+Ya con el hardware y el software listo, será posible armar el dispositivo  permanente donde  primeramente se realizarán la respectivas pruebas de medición y calibración, para poder asegurar su correcto funcionamiento e implementación como sistema de aereación y acondicionamiento, y  por último,  evaluar los resultados. \\ 
+
+A continuación, se profundizará en cada parte del sistema propuesto.\\
+
+
+Cabe destacar que esta propuesta se desarrolló fuera de las aulas de la Universidad por cuestiones sanitarias actuales, y  gracias a los recursos PAL y el apoyo completo e incondicional  del Ing. Antonio Huerta C. se  logró recabar todos los materiales necesarios para poder realizar esta propuesta. \\
+
+Anexándose en el apéndice D  una lista de los materiales propuestos a utilizar  para la construcción del  sistema completo de  aereación y acondicionamiento acoplado a un arduino para su uso en una celda de flotación a nivel laboratorio.
+
+
+
+
+
+	\subsection[Propuesta de armado e implementación de tanques  de aereación \\ y acondicionamiento.]
+{Propuesta de armado e implementación de tanques  de aereación y acondicionamiento.}
+
+Los tanques de acondicionamiento se propone sean creados a partir de tubería de PVC al ser un material económico, resistente y fácil de manipular, el cual mediante tubería de menor diámetro se anclarán a una base de polímero de alta densidad, que con la ayuda de tornillería permitirán una sólida unión entre los componentes.\\
+
+ Siendo necesario realizar primeramente los cortes respectivos, así como el tratamiento de las superficies a pegar y sellar para evitar fugas,  también las perforaciones respectivas de sujeción, para poder ensamblar, los componentes como el motor DC, flecha, propela  y los sensores.\\
+
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.45]{Photos/TanqAcond}
+%\includegraphics[scale=.45]{Photos/Aspas}
+%\caption{Taque de acondicionamiento propuestos de PVC y aspas con eje obtenidas mediante proceso de mecanizado en frío (torno)  }
+%\label{Aspas}
+%\end{figure}
+
+
+Cabe mencionar que las aspas y el eje de agitación se propone sean fabricadas  de acero inoxidable clase 303, obtenidas  mediante un proceso de   mecanizado en frío (torno), apreciándose en la figura \ref{D1} un ejemplo de su construcción. 
+
+Ambos tanques acondicionadores se propone sean  sujetados a las tablas de polímero de alta densidad con el uso de parches de velcro, el cual deberá ser  colocado estratégicamente ya que a la hora de que el usuario tenga que realizar el lavado del tanque y/o flecha de agitación, se verá con la necesidad de  retirarlo para su adecuado manejo y limpieza.
+
+También al tener en cuenta  que en la ``tapa'' de los tanques se tendría anclado el motor y los sensores, los cuales se encuentran conectados con el resto del sistema por lo que se propone colocar   un gancho donde este pueda ser colocado mientras se manipula el resto del tanque, sin que este  corra el riesgo de caerse.\\ 
+
+
+
+%\newpage
+	                                                  
+		\subsection[Propuesta de armado e implementación del sistema\\ de acondicionamiento. ]
+{Propuesta de armado e implementación del sistema de acondicionamiento. }
+
+
+
+El sistema  para la medición de la agitación en los tanques fue desarrollado totalmente por el autor, donde  se realizó un  prototipo de pruebas, el cual se encontraba montado en un ProtoBoard donde se sujeta gracias a unos elásticos del mismo, igualmente sujetado el display LCD del cual al ser utilizado en modo de 4 bits solo fueron utilizados los primeros 6 y los últimos 6 pines del LCD, estos fueron conectados como se muestra en la figura \ref{Prot1}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.4]{Photos/Prot1}
+\caption{Prototipo de pruebas  del control de la agitación con sensor Hall. }
+\label{Prot1}
+\end{figure}
+
+Observándose el sensor  hall en la parte inferior de la figura.\\
+A continuación, se especificará con mayor claridad las conexiones realizadas a la placa Arduino UNO. 
+		
+
+%\newpage
+
+		\subsubsection{Esquematización del prototipo de pruebas.}
+
+Para visualizar mejor las conexiones realizadas se propuso emplear  el uso de un simulador de Arduino usando la plataforma tinkercad \cite{tink} el cual se muestra en la figura \ref{Conexiones}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.42]{Photos/Prot2}
+\caption{Esquema de conexiones para el sistema de agitación.  }
+\label{Conexiones}
+\end{figure}
+
+En esta podemos observar que es posible conectar el display sin la necesidad de usar  el módulo  I2C, gracias a la compatibilidad de 8 bits que presentan  todos los displays de este estilo,   obteniendo los mismos resultados y reduciendo ligeramente los costos, por otro lado al no verse la utilidad del control del contraste de los displays ya  que siempre se encontrarán ubicados en un ambiente donde se necesita el máximo para su mejor apreciación, se opta por quitar los potenciómetros y realizando la conexión  respectiva directa a tierra. \\
+
+Cabe destacar que se eligió utilizar este tipo de conexión ya que al tener ambos sensores hall en un mismo arduino aumentaba el ruido y la incertidumbre en las mediciones lo que obligó a utilizar la conexión anterior mencionada para cada uno de los arduinos. Y proponiendo  la misma conexión para el sistema aereador el cual usa un Arduino Nano. 
+
+\subsubsection{Propuesta de implementación en el sistema de  acondicionamiento. }
+
+Una vez verificado que las primeras pruebas sean satisfactorias, se propone  proceder  a realizar la implementación ya  en los tanques acondicionadores, proponiendo el siguiente esquema de acomodo general entre sensor, sistema de aereación, eje, propelas, motor, imán y sensor efecto hall.\\
+
+
+Como podemos observar en la figura \ref{D1} consta  en esencia de acoplar imanes a lo largo del eje del motor, que es el mismo que se encuentra unido a la flecha y aspas de agitación logrando esto al   soldar  una tuerca del mismo diámetro al eje para conseguir la superficie (plana) en donde pegar los imanes correspondientes, estos que al pasar al sensor hall que se encuentra en la parte superior de la figura, generan una señal que es detectada mediante interrupciones al arduino y así poder realizar el conteo de veces que los imanes pasan a través de un lapso de tiempo y de esta forma entregar al usuario una lectura de las revoluciones por minuto del sistema de agitación.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.8]{Diagramas/D2.jpg}
+\caption{Propuesta de acomodo del sistema de acondicionamiento.}
+\label{D1}
+\end{figure}
+La manera en que este se propone que sea  conectado y puesto en el sistema, es mediante la adaptación de cajas de acrílico como panel de control tanto para la regulación de velocidad con el controlador de velocidad, como para el almacenamiento de los arduino y los displays.\\
+
+Cabe mencionar que es necesario tener el control de velocidad por separado de ambos tanques acondicionadores, proponiendo el uso de un módulo controlador de velocidad extra.
+%\newpage
+%
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.3]{Photos/ControlVel.png}
+%\includegraphics[scale=.07]{Photos/ControlVel1}
+%\caption{Módulo Controlador de velocidad  10-35V 5A DC }
+%\end{figure}
+%
+%		\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.06]{Photos/Conexiones}
+%\includegraphics[angle=0,scale=.0685]{Photos/Conexiones2}
+%\includegraphics[scale=.06]{Photos/Conexiones3}
+%\caption{Imágenes de conexiones entre componentes en el sistema final, a) cara interna, b) trasera y  c) lateral respectivamente }
+%\end{figure}
+%
+	\paragraph{Visualización de resultados al usuario }.\\
+
+
+Los resultados se propone que se muestren  al usuario mediante el display de 16x2 (Figura \ref{resul}),  para minimizar el ruido entre las mediciones, se propone el uso de 2 arduinos y destinando   un display a cada uno lo que permitirá brindar al usuario por cada uno de los motores : las Revoluciones por minuto, un contador que indica las veces que manda una señal el sensor Hall y un cronómetro que permitirá cuantificar  los tiempos de acondicionamiento de los reactivos a los que es sometida la pulpa en los tanques.\\
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.15]{Photos/DispRPM}
+\caption{Ejemplo de visualización propuesta de resultados por Display}
+\label{resul}
+\end{figure}
+
+
+\newpage
+
+	\subsubsection{Propuesta de calibración del sistema acondicionador.}
+
+
+La calibración se propone que se realice  por cada variable a monitorear por separado y realizando pruebas por triplicado:
+
+ 
+\begin{itemize}
+\item Sistema de mezclado (RPM): Mediante el uso de un tacómetro digital de tipo foto/contacto modelo DT-2236.
+\end{itemize}
+
+
+
+
+
+Se propone colocar  en la parte inferior  del eje del motor una cinta la cual sirva  para medir cada una de las vueltas detectadas por el tacómetro digital, logrando comparar de manera directa tanto el resultado obtenido como el obtenido por el sistema arduino. \\
+
+Para esto se recomienda   la toma de un video,  en el cual se mostrará con detalle ambos valores registrados tanto por el sistema arduino como el tacómetro, para así poder compararlos cada uno de los valores en  una hoja de cálculo para poder realizar su gráfica  y su respectiva regresión lineal, y así lograr  calibrar el sistema de manera correcta.\\
+
+
+Esto se realizará  para ambos motores acondicionadores,  por separado y usando el tacómetro en modo que detecta la luz reflejada sobre el objeto cuantificar las RPM.\\
+
+
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.15]{Photos/CalRPM}
+%\caption{Calibración del sistema de acondicionamiento}
+%\end{figure}
+
+
+
+
+\subsection[Propuesta de armado e implementación del  sistema \\de aereación  ]
+{Propuesta de armado e implementación del  sistema de aereación   }
+
+Primeramente aclarar que la conexión  propuesta es la misma utilizada para el sistema de RPM (fig\ref{Conexiones}), solamente existen variaciones en el código computacional, por cuestiones de calibración principalmente, mostrado en el apéndice B. Razón por la cual se omite dicha sección al ser repetitivo. \\
+
+		Este sistema se propone que integre  un compresor de aire hasta 300 PSI de la marca Mikel's modelo W-1557  como fuente principal, el cual se muestra en la siguiente figura:
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.5]{Photos/Compresor}
+\caption{Compresor propuesto como fuente de alimentación de aire. \cite{w1557} }
+\label{Compresor}
+\end{figure}
+
+El cual deberá ser  conectado en serie  mediante manguera   al caudalímetro LZQ-7 y después al sensor  YF-S401  el cual cuenta con reducciones de cobre en cada uno de los lados, para después llevar con  manguera dentro del tanque aereador solamente. \\
+
+		
+	
+	\subsubsection{Propuesta de implementación en el sistema de aereación.  }
+	
+
+	La manera en que se distribuirá el  aire se propone sea mediante el uso de una manguera a la cual se le realicen   pequeños orificios  de diámetro de una aguja (0.5 mm aprox) a una distancia de 1 cm entre ellos,y con la ayuda de alambre, cinchos y algunas adaptaciones   permitirán suministrarlo desde la parte inferior para asegurar que el aire se disperse  de manera homogénea en toda la pulpa y promover las condiciones que optimicen la adsorción de los reactivos. \\
+
+
+	Se  recomienda que la manguera de suministro de aire por conveniencia vaya junto con el cableado principal de la alimentación de los motores, del lado derecho del sistema.\\
+
+	Las medidas del sistema de aereación propuestas, que constan del diámetro interno del tanque acondicionador, diámetro del sistema de aereación y el diámetro de las aspas de agitación son respectivamente y en promedio  : 11 cm, 8 cm y  4.3 cm, estas medidas son propuestas para conservar las burbujas generadas lo más integras posibles y que logren el contacto con la mayor cantidad de mineral, evitando que se fragmente la esfera de aire a causa del impulsor o propela. Observando un esquema en la figura \ref{D1}\\
+
+	
+
+
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.15]{Photos/SisAire}
+%\caption{Sistema de aereación en tanque  }
+%\label{SisAire}
+%\end{figure}
+
+
+
+	\paragraph{Visualización de resultados al usuario }.\\
+
+El resultados se recomienda mostrarse   al usuario mediante el display 16x2 al igual que los anteriores, dando información de: los Litros por minuto que transcurren a través del sistema, los ciclos por segundo o bien conocidos como Hz que se generan en el sensor YF-S401, y de igual forma un cronómetro que permita cuantificar los tiempos de aereación en la pulpa.\\
+
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.15]{Photos/DispAire}
+\caption{Visualización propuesta de flujo de aire por display  }
+\label{DispAire}
+\end{figure}
+
+
+%\newpage
+
+	\subsubsection{Calibración del sistema de aereación }
+
+\begin{itemize}
+\item Sistema de aereación:
+\end{itemize}
+
+
+ Se propone el uso de un caudalímetro o medidor de flujo  modelo LZQ-7 para aire como se muestra a continuación (figura \ref{19}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.35]{Photos/Caudalimetro.png}
+\includegraphics[scale=.35]{Photos/CaudalimetroM.png}
+\caption{Caudalímetro LZQ-7 y sus dimensiones. \cite{LZQ7}}
+\label{19}
+\end{figure}
+
+
+ Este  deberá conectar en serie la compresora de aire modelo W-1557 y el caudalímetro 
+ %como se muestra en la  figura \ref{Calibración del sistema de aereación} 
+ ,esto con el fin de cuantificar en el caudalímetro el aire suministrado por la compresora, para posteriormente pasar al sensor YF-S401 el cual dependiendo del flujo de aire que pase a través del mismo, serán las vueltas que dará la turbina y mandará la señal al sistema arduino.\\
+
+%Al realizar la regulación del aire durante la calibración, se observan incrementos de presión al intentar  disminuir o variar el flujo de aire, lo que implicó que la toma de mediciones a diferentes flujos de aire fue ajustando que tan cerrada esta la palanca en la boquilla de la compresora.
+
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.15]{Photos/CalAire}
+%\caption{Calibración del sistema de aereación}
+%\label{Calibración del sistema de aereación}
+%\end{figure}
+
+
+\newpage
+
+
+
+
+\subsection{Código computacional.}
+
+El código propuesto fue desarrollado  100\% en el IDE de Arduino, mediante la aplicación de conocimientos previos en programación adquiridos durante la carrera y una gran parte de información de hardware y software de la página oficial de arduino, que permitieron desarrollar el código computacional.% de mi primer proyecto desarrollado. 
+\paragraph{Comunicación con Excel }.\\
+
+Al ser parte de las metas del presente proponer un método de comunicación o registro, directamente en un computador, se propone para el fácil tratamiento de datos posterior el usar Excel como herramienta que permita realizar el tratamiento que el usuario desee. Para esto se propone el desarrollo de un código en python, una de las principales razones por usar este método es que al hacer uso de un ejecutable o bien el programa  PLX - DAQ (usado comúnmente) limita a su uso en solo un sistema operativo, problema que no se tendrán al ser un programa en Python (multiplataforma) y con el uso de un par de librerías fáciles de instalar, se logrará obtener los mismos resultados. 
+
+El código presentado es tomado como base de un  repositorio en Github \cite{Git} el cual fue modificado y adaptado para los fines necesarios en la presente propuesta.\\
+
+
+	
+	\newpage
+
+
+
+
+\section{Resultados. }
+
+	
+		\subsection{Sistema de aereación y acondicionamiento. }
+
+		
+
+		El resultado final del sistema propuesto a lo largo del presente  es bosquejado en   
+	  la figura \ref{D2}, como podemos observar 
+		%el sistema de tuberías fue detallado en color negro para  su presentación,
+		en la parte superior se encuentra el tanque con el  sistema de aereación el cual permitirá ajustar la  altura del difusor dentro del mismo tanque,   incrementando el alcance de estudio al poder controlar una variable más, por el lado derecho   de la figura \ref{D2}  se tendrá  el  conjunto de cables de alimentación junto con la manguera que suministra el aire, mientras que del lado izquierdo se propone colocar  el cable de señal que conecta los sensores y el sistema arduino, esto es para evitar  cuestiones de ruido en el sistema. %cabe recomendar especial cuidado con este cableado,  en la parte frontal al motor se propuso el uso de un  alambre que sujeta el sistema de aereación el cual puede subirse a la altura deseada, según se requiera.\\  %,por último tenemos sujetado en la parte trasera de motor el sensor hall como se observa en la figura \ref{D1}, cabe mencionar  que el gancho para sujetar el motor a la hora de lavar el tanque, le corresponde el ubicado  de lado derecho del sistema  .\\
+Inmediatamente por debajo de la estructura que soporta  el sistema del tanque aereador, se encontrará su display donde se mostrará la información al usuario, contenido en una caja de acrílico junto un arduino nano y el sistema de conexiones.\\
+
+En la parte inferior tenemos el tanque acondicionador el cual solo consta de igualmente el sistema de agitación como se observa en la figura \ref{D1}%, cabe mencionar que el gancho que le corresponde a la hora de realizar la limpieza y vaciado del tanque es el ubicado en la parte frontal del sistema.\\
+
+Inmediatamente debajo de la estructura que soporta el  tanque acondicionador se encontrará el panel de control del sistema, donde están  los controladores de velocidad y alimentación de cada uno de los motores, con un switch de cambio de sentido en el giro  para el motor 1 correspondiente al  de acondicionamiento.\\
+%se encontró con problemas de interferencia al accionar repetidamente este switch por lo que se recomienda usarlo con moderación y razón por la cual se optó por implementarlo solo en el sistema acondicionador.\\
+
+Debajo de este se tendrán los displays que brindan información de la agitación del sistema, junto con los dos arduino UNO encargados de recibir las interrupciones del sensor para trasformarlo en RPM, teniendo primeramente el del Motor 1 (sistema acondicionador) y debajo el display del Motor 2 (sistema de aereación).\\
+
+En la parte trasera al sistema de control de las RPM se propone fijar  el sensor YF-S401, para su protección y conservación del mismo. En el costado izquierdo es posible colocar  un HUB USB (multicontacto) el cual permite tener el control de la alimentación  por separado de cada uno de los arduinos.\\
+
+%NOTA: Las imágenes mostradas tienen la calidad suficiente para poder realizar zoom y observar los detalles de manera óptima.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.8]{Diagramas/D1.jpg}
+%\includegraphics[scale=.15]{Photos/SisComp2}
+\caption{Propuesta  final del sistema de acondicionamiento y aereación.  }
+\label{D2}
+\end{figure}
+
+
+
+
+
+
+		\subsection{Sistema de acondicionamiento. }
+
+	Proponiendo las dimensiones  en la construcción de ambos tanques acondicionadores: \\
+
+		\begin{center}
+		$20.8 \;cm \;Promedio  $ de altura  \\[1cm]
+
+	$11\; cm $ de diámetro interno \\[1cm]
+
+		Dando como resultado un volumen máximo igual a :\\[1cm]
+
+		$\pi\; *\; (\dfrac{11 \;cm \; de\; diámetro }{2})^{2} \;*\; 20.8 \;cm \;Prom \;  de\; altura = 1976.6901\; cm ^{3}$\\[1cm]
+
+		Realizando las conversiones necesarias:\\[1cm]
+
+$1976.6901\; cm ^{3} \; *\;( \dfrac{1 \;dm}{10 \;cm}  )^{3} \;= \;1.97669 \;dm ^{3}\; =\; 1.97669 L $\\[1cm]
+
+Al trabajar a una capacidad máxima del 80 \% para evitar derrames:\\[1cm]
+
+$1.97669 L\;*\; 0.80 \;= \;1.5814 \;L \;como \;capacidad. $\\[1cm]
+
+
+
+
+
+
+
+
+\end{center}
+\subsubsection{Propuesta de calibración al  sistema acondicionador.}
+
+
+
+
+Proponiendo que datos sean  recopilados de un video tomado al incrementar periódicamente las RPM, mientras se encuentre  el tacómetro y el sistema arduino trabajando de manera simultánea.
+
+\begin{table}[H]
+\centering
+\caption{Tipo de datos propuestos a obtener  durante la  calibración   del sistema de agitación  }
+\includegraphics[scale=.83]{Photos/TCM1}
+\includegraphics[scale=.83]{Photos/TCM1-2}
+\includegraphics[scale=.83]{Photos/TCM1-3}
+
+\end{table}
+
+
+%\begin{table}[H]
+%\centering
+%
+%\caption{Datos recopilados durante la calibración del Motor 2 }
+%\includegraphics[scale=.72]{Photos/TCM2}
+%\includegraphics[scale=.72]{Photos/TCM2-2}
+%\includegraphics[scale=.72]{Photos/TCM2-3}
+%
+%\end{table}
+Esto con el fin de   ajustar y/o comparar  los valores obtenidos  del sistema propuesto en el presente trabajo con instrumentación digital/analógica fabricada especialmente  para este fin. \\
+	
+
+
+
+			\paragraph {Regresión lineal propuesta.}
+
+A través de la figura \ref{CalM1} se puede observar la representación gráfica de los   valores típicos  a obtener  durante una prueba del sensor Hall y el tacómetro DT-2236, aplicando un ajuste por mínimos cuadrados  para obtener un coeficiente de correlación lo mas cercano  a 1, siendo los resultados esperados.
+
+
+		%	\subparagraph{ 1}
+
+        Tipo de información gráfica típica obtenida durante una calibración del sistema de agitación.
+%El gráfico propuesto para el motor 1 es:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.3]{Photos/GCM1.png}
+\caption{ Ejemplo de información obtenida durante calibración de sistema de acondicionamiento. }
+\label{CalM1}
+\end{figure}
+
+
+
+%\newpage
+%			\subparagraph{Motor 2}
+
+
+%El gráfico obtenido para el motor 2 es:
+
+%\begin{figure}[H]
+%\centering
+%\includegraphics[scale=.7]{Photos/GCM2.png}
+%\caption{Figura obtenida durante la prueba de calibración del motor 2  }
+%\end{figure}
+%
+Como podemos observar el valor de $R^{2}$ es prácticamente igual a 1 lo que indica que la ecuación lineal de la  regresión lineal coincide en su mayoría con la tendencia actual de los datos, lo que nos habla de una buena correlación, teniendo una precisión  asociada de más menos 10 RPM explicando las razones en el análisis del presente, los resultados obtenidos durante esta calibración eran los esperados por la precisión de los valores por lo tanto por comodidad al leer los valores que resultaron afectados por la ecuación de la regresión lineal obtenida, no sean números enteros, complicando  al usuario la toma de datos directamente del display.   
+
+%\newpage
+
+
+		\subsection{Sistema de aereación.}
+Las dimensiones propuestas para el sistema de aereación   constan del diámetro interno del tanque acondicionador, diámetro del sistema de aereación y el diámetro de las aspas de agitación, son respectivamente y en promedio : 11 cm, 8 cm y 4.3 cm, observándose gráficamente en la figura \ref{D1}
+
+\subsubsection{Propuesta  de calibración del sistema aereador.}
+
+Para esta etapa se podrían tener problemas de  %esta etapa es importante tener  especial cuidado ya se podría llegar a tener problemas de 
+presión ya 
+%Los datos típicos a obtener  durante la prueba de calibración se obtenidos bajo las dificultades de
+que al cerrar el flujo de aire para realizar la medición a diferentes flujos, la presión del sistema se incrementará provocando  botar  alguna de las mangueras, recomendando el uso de cinturones o cinchos para asegurar el buen funcinamiento , también recomendable realizar pruebas del sensor sumergido bajo agua para asegurar no tener fugas de aire en el sistema.% por lo que los datos mostrados son obtenidos mediante la regulación manual directamente en la salida de la compresora, lo que limitó la cantidad de datos obtenidos, problema que se solucionará al tener el sistema de aereación en las instalaciones del Departamento de Ingeniería  Metalúrgica de la Facultad de Química.
+
+\begin{table}[H]
+\centering
+
+\caption{Tipo de datos  a obtener durante la  calibración del sistema de aereación}
+\includegraphics[scale=.4]{Photos/TCA}
+
+\end{table}
+
+
+			\paragraph{Regresión Lineal.}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=.7]{Photos/Cal-Sis-Aere-401.png}
+\caption{Ejemplo de gráfico de una prueba de calibración del sistema de aereación  }
+\end{figure}
+
+Igualmente podemos observar una buena correlación de datos obteniendo un ajuste del tipo lineal. Teniendo como limitación la lectura de fujos por debajo de los 2 L/min. 
+%A diferencia de las anteriores este ejemplo muestra el uso de una ecuación lineal para que se ajustara mejor  la tendencia y el valor de $R^{2}$ aumente lo más cercano a 1, para poder realizar el ajuste fue necesario eliminar la primera pareja de valores (0,0) por unos muy cercanos a cero (0.01) para poder realizar este ajuste y obtener la curva más apegada a los datos recopilados. %	Este tipo de comportamiento se le atribuye a que este sensor no es el mas adecuado para el manejo de este medio, al ser preferible su uso con líquidos. 		
+
+		
+
+
+
+		
+		\subsection{Código computacional}
+
+	
+
+		El desarrollo del código permite cuantificar la cantidad de señales que se reciben por los sensores utilizados, para poder brindar al observador en  intervalos de 3 segundos obtenga registros de la cantidad de flujo de aire (sistema de aereación) en L/min o bien la velocidad de agitación del sistema en RPM ambos acompañados de un cronómetro y contador de la variable. 
+
+		Los códigos  computacionales  propuestos a lo largo del presente trabajo por practicidad, se anexan en el  apéndice B y C    del presente.
+%\newpage
+	
+
+
+
+
+
+
+
+\section{Análisis de resultados. }
+
+Las dimensiones de los tanques acondicionadores propuestos son calculadas a partir de un modelo estándar industrial a escala manteniendo una  relación en todas  sus dimensiones aproximada de 24,   lo que permite tener el mayor acercamiento del alumnado a una planta real de beneficio de minerales. 
+%\paragraph{Análisis dimensional}
+
+\begin{center}
+$\dfrac { Nivel \;planta \;industrial}  {Nivel \;laboratorio} $ \\[0.5cm]
+
+La relación de diámetros en tanques aereador y acondicionador:\\
+
+$\dfrac{243.84\;cm}{10\; cm}\;=\;24.38$\\[0.5cm]
+
+
+La relación de altura en tanques aereador y acondicionador:\\
+$\dfrac{243.84\;cm}{10\; cm}\;=\;24.38$\\[0.5cm]
+
+
+La relación de diámetros del impulsor en tanques aereador y acondicionador:\\
+$\dfrac{104.14 \;cm}{4.3\; cm}\;=\;24.21$\\[0.5cm]
+
+%\newpage
+La relación de anchos del impulsor en tanques aereador y acondicionador:\\
+$\dfrac{12.7 \;cm}{0.52\; cm}\;=\;24.4$\\[0.5cm]
+
+\end{center}
+
+La distribución en escalera que se propone en los tanques acondicionadores tiene como objetivo que estos se encuentren en un futuro  interconectados, y funcionen en secuencia. \\
+
+
+	%Durante la implementación del panel de control se experimentaron algunas dificultades ya que el herramental disponible no era el mas adecuado para los fines a usar lo que complicó el armado del mismo, sin embargo gracias a la dedicación se logró concluirlo de manera óptima y presentable. \\
+
+\subsection {Sistema de agitación. }
+	
+	La propuesta de implementación  del sensor de efecto hall como se puede observar en la figura \ref{D1} se espera se realice con el uso de dos imanes (anclados al eje del motor con la ayuda de una tuerca )  en vez de uno, esto con fin de disminuir el intervalo de medición a la mitad y así ofrecer lecturas en intervalos más cortos. %lográndolo satisfactoriamente. \\
+	
+	La forma que se creó el código computacional es recopilar la información cada 3 segundos como intervalo, esto con una precisión en los resultados de más menos 10 RPM, adecuado para los fines utilizados. Si se quisiera reducir el error asociado a la medición se lograría al aumentar el intervalo de tiempo (entre cada medición), y, viceversa si se desea el efecto contrario. \\
+
+
+Debido a la naturaleza del sistema al estar en constante vibración por parte de ambos sistemas de agitación es posible que pueda existir ruido, por lo que se recomienda utilizar a bajos niveles de agitación (<2000 RPM). Como recomendación se propone proteger los microcontroladores en una bolsa anti-estática que divida el sistema de control de los motores  y los Arduino UNO en la parte inferior del sistema.\\
+
+%Durante las pruebas  
+%y el armado del sistema final 
+%se detectó   que el sistema  propuesto presentaba ruido en las mediciones, que, después de diversas y  exhaustivas  pruebas y/o cambios  se atribuye principalmente a falsos pulsos por las vibraciones generadas por los motores (arriba de 5000 RPM, ), el cual no será problema por necesitar agitación a  menores  que las 1000 RPM; y al cable de señal que conecta el sensor con el arduino es lo bastante sensible como para percibir el campo magnético generado por el paso de corriente que alimenta a los motores, lo que implicó realizar el cableado de este mismo con especial cuidado y por separado del resto. Algunos de los componentes presentaban variaciones al tocarlos físicamente y algunas veces sin explicación alguna lo que implicó remplazar componentes de Hardware para asegurar un buen funcionamiento, también se opto por dejar cada sensor trabajando por separado en su arduino respectivamente.\\
+%Para mayor protección se colocó una bolsa anti-estática entre el sistema de control de los motores y los Arduino UNO en la parte inferior del sistema .\\
+
+Por otro lado debido a la configuración de imanes propuesta a montar en cada  motor que interaccionarán  con el sensor KY-003, es necesario en el código computacional multiplicar por  una constante para obtener los valores en RPM, la cual se obtuvo de la siguiente manera: 
+\begin{center}
+$RPM \;= \;n$ú$mero \;de \;vueltas\; por\; minuto$ \\[1cm]
+
+$Intervalo \;de \;medici$ó$n =\; 3\; segundos$\\[1cm]
+
+$Intervalo \;de \;medici$ó$n =\; (3\; segundos)  (K=20 ) \; = 1 \; minuto$\\[1cm]
+
+La constante es igual a 20, pero se usaron 2 imanes \\[1cm]
+
+
+$ \dfrac {(K)} {2 \; Interrupciones \; por\; vuelta  }  $\\[1cm]
+$\dots K = 10   $
+
+
+	\end{center}
+siendo la razón por la cual se multiplica la variable ``valorFijado'' por el resultado de la regresión lineal y aparte por la constante ``10''
+
+\newpage
+\subsection {Sistema de aereación  }
+	
+	El sensor / Caudalímetro  YF-S401, como bien se mencionó está fabricado para fluidos líquidos, lo que obligará  a realizar las adaptaciones necesarias para asegurar su buen funcionamiento, pudiendo tener  como principal inconveniente  el flujo inicial de aire tenga que ser lo suficientemente alto para iniciar a contar los Hz que este sensor nos brinda, esperando problemas al intentar medir flujos de aire bajos. %proporcionado por la compresora no fue suficiente para accionar el sensor YF-S201,
+%lo que implicó
+Por lo que se recomienda disminuir la distancia entre la entrada de aire  y la turbina  que provoca la señal en el sensor %con esto permite mostrar al usuario la periodicidad con la que se detectan pulsos emitidos por el mismo sensor en unidades de Hz al ser tomada cada segundo la medición, 
+%y que este mediante la calibración se pueda relacionar al  flujo de aire que atraviesa el dispositivo, mostrándose por conveniencia y al instrumento de calibración  en L/min. \\
+
+	Durante la calibración  se deberá  ajustar y/o comparar  los valores obtenidos mediante el uso de instrumentación fabricada por terceros  con especificaciones antes mencionadas, obteniendo parejas de valores que permitirán  asociar los pulsos emitidos por el sensor  y poder utilizar este sensor ajeno a la medición de flujo de aire, comparando los resultados con el  caudalímetro LZQ-7 el cual, si lo es, lo  que permite asegurar la veracidad de los resultados obtenidos.\\
+
+%Durante esta etapa  se encontró con la limitante de que la fuente principal de aire (compresor) solamente dispone de 12 L/min aprox  al conectarlo directamente y sin forzar el aumento en la presión en el sistema, 
+%sumado a la limitante de realizar el proyecto fuera de las instalaciones de la facultad, condujo  a limitar el rango de calibración  de 0-12, 
+%a una unidad de resolución gracias a la  escala del caudalímetro. \\
+%Los valores reportados en esta etapa siempre son aproximados ya que la naturaleza a que la compresora de este tipo dispone el aire no es continua sino intermitente, razón por la cual a lo largo del proyecto se habla de valores aproximados.\\
+
+	%Este   problema    se superará  cuando el sistema de aereación y acondicionamiento se desarrolle dentro de   los laboratorios de beneficio de minerales de la FQ ya que se conectará al sistema de aire que cuentan dichos laboratorios el cual se suministra de manera constante y a presiones mayores.\\
+
+
+
+
+
+%\newpage
+		
+	
+\section{Conclusiones.}
+\begin{itemize}
+\item  Se  logró diseñar %proponer el diseño y desarrollo que se deberá llevar a cabo para poner   en marcha  
+un sistema de aereación y acondicionamiento, mediante el acoplamiento de un sistema Sensores-Arduino-Usuario/Ordenador que permitirá realizar estudios y complementar  el proceso de flotación en los laboratorios del Departamento de Ingeniería Metalúrgica, destacando en que ahora se podrá  realizar la aereación y acondicionamiento de la pulpa fuera de la  celda de flotación.% facilidad de uso y cumplir con el presupuesto previsto.
+
+
+\item El desarrollo exitoso del código computacional  permite monitorear en tiempo real la velocidad de agitación del sistema de cada uno de los tanques acondicionadores y el caudal de aire suministrado  durante el proceso  de aereación, mostrándose los resultados por vía serial (computador) o bien directamente al usuario por medio del display.
+
+%\item El ruido detectado  en las señales   a lo largo de pruebas realizadas durante la propuesta presente, permite aprender que   se debe de tener en cuenta siempre que sea necesario  trabajar con microcontroladores y sensores, ya que por su alta sensibilidad a cualquier agente externo como vibraciones, estática u inducción eléctrica (ya sea en el mismo arduino o en las cableado de conexiones),    o bien,  su calidad de un producto genérico  pueda perturbar el  correcto funcionamiento. 
+\end{itemize}
+	
+
+
+
+
+
+
+
+
+
+
+\appendix
+	
+	\newpage
+
+
+
+	\section{Instructivo de uso propuesto.}
+Con el fin de utilizar de manera adecuada el sistema propuesto  en el presente se recomienda una serie de instrucciones a seguir para el uso del software incluido. \\
+%\subparagraph{Comunicación Arduino - Excel }.
+{\bfseries- Comunicación Arduino - Excel:}
+
+%dividiéndose como sigue:
+
+
+%\paragraph{Sistema de acondicionamiento}
+%\subparagraph{Motor 1}
+%
+%\begin{enumerate}
+%
+%\item Verificar que las perillas se encuentren en su valor mínimo ( girar a la izquierda ) o bien el switch este en apagado.
+%\item Verificar que el motor se encuentre dentro del tanque acondicionador o bien para pruebas de calibración o funcionamiento de la propela verificar que este bien colocada en el gancho de acero  en la parte frontal del sistema (con cuidado de no presionar algún cable).
+%\item Conectar la fuente de poder de 12v de la alimentación al motor.
+%\item Accionar el interruptor  al sentido deseado.
+%\item Conectar y encender el sistema Arduino del HUB ubicado en el lateral izquierdo.
+%\item La perilla (potenciómetro)  del lado derecho  del sistema de control que se indica en la figura \ref{SisComp}, usar para establecer la agitación deseada (de forma gradual) durante el proceso, la cual se recomienda su manejo  con delicadeza por su alta sensibilidad de giro.
+%\item Para apagar el equipo, primeramente  asegúrese de tener la perilla hasta el valor mínimo (girar a la izquierda), o bien colocar el switch  en posición media ( apagado )
+%\item Es posible retirar la tapa con el sistema de acondicionamiento para colocar en el gancho frontal, y así poder realizar limpieza de los componentes,  o cambios en la pulpa.
+%\item Desconectar la fuente de poder de 12v cuando no este en uso.
+%
+%\end{enumerate}
+%
+%\subparagraph{Motor 2}
+%
+%\begin{enumerate}
+%
+%\item Verificar que las perillas se encuentren en su valor mínimo (girar a la izquierda) 
+%\item Verificar que el motor se encuentre dentro del tanque acondicionador o bien para pruebas de calibración, funcionamiento o aseo  de la propela verificar que este bien colocada en el gancho de acero  en la parte lateral  del sistema (con cuidado de no presionar algún cable).
+%\item Conectar la fuente de poder de 12v de la alimentación al motor.
+%\item Conectar y encender el sistema Arduino del HUB ubicado en el lateral izquierdo.
+%\item La perilla (potenciómetro)  del lado izquierdo  del sistema de control que se indica en la figura \ref{SisComp}, usar para establecer la agitación deseada (de forma gradual) durante el proceso, la cual se recomienda su manejo  con delicadeza por su alta sensibilidad de giro. 
+%\item  Monitoreo de la variable (display u ordenador). 
+%.
+%\item Para apagar el equipo, solamente   asegúrese de tener la perilla hasta el valor mínimo (girar a la izquierda).
+%\item Es posible retirar la tapa con el sistema de acondicionamiento y el de aereación de manera paralela  para colocar en el gancho lateral,(NOTA: para poder retirar la tapa es necesario levantar el sistema de aereación por la parte superior) y así poder realizar limpieza de los componentes,  o cambios en la pulpa.
+%\item Desconectar la fuente de poder de 12v cuando no este en uso.
+%
+%\end{enumerate}
+%
+%NOTA: Si durante el uso de cualquiera de los sistemas de agitación de detecta ruido ( señales a pesar de estar inmóvil  el motor), es necesario realizar : 1) Desconectar todo el sistema Arduino (puertos USB), esperar 5 segundos. ; 2) Verificar que el cable individual (señal) no este   en contacto o muy cercano algún otro cable de alimentación del mismo o bien con cualquier agente externo que pueda perturbarlo   ;3) encender nuevamente el sistema.  Si el problema persiste se recomienda   verificar la integridad del cable de señal  (continuidad). 
+% 
+%
+%\subparagraph{Sistema de aereación}
+%
+%\begin{enumerate}
+%\item Verificar que las conexiones a la fuente de aire embone de manera adecuada.
+%\item Verificar que la tapa (Motor 2) con el sistema  se encuentre dentro del tanque aereador o bien para pruebas de calibración, funcionamiento o aseo  de las mangueras  verificar que este bien colocada en el gancho de acero  en la parte lateral  del sistema (con cuidado de no presionar algún cable).
+%\item Conectar y encender el sistema Arduino del HUB ubicado en el lateral izquierdo.
+%\item  Ajustar la altura del sistema de aereación  dentro del tanque, mediante el alambre que sobresale en la tapa, según sea necesario.
+%\item Comenzar a  suministrar el flujo de aire.
+%
+%\item Monitoreo de la variable (display u ordenador). 
+%\item Para apagar el equipo,    asegúrese de tener apagado el flujo de aire.
+%\item Es posible retirar la tapa con el sistema de acondicionamiento y el de aereación de manera paralela  para colocar  con precaución en el gancho lateral, (NOTA: para poder retirar la tapa es necesario levantar el sistema de aereación por la parte superior) y así poder realizar limpieza de los componentes,  o cambios en la pulpa.
+%\item Desconectar la fuente de poder de 12v cuando no este en uso.
+%
+%\end{enumerate}
+
+
+
+Para cualquiera de las  variables a monitorear es posible realizar la recopilación de los datos en una hoja de cálculo, para eso se recomienda seguir las siguientes instrucciones.  \begin{enumerate}
+\item Conectar vía  USB el sistema arduino a monitorear al ordenador 
+\item Instalar la versión más reciente de Python  directamente de su Web oficial :\\ https://www.python.org/downloads/.
+\item Instalar las librerías necesarias (xlwt,  pyserial), directamente desde la línea de comandos del ordenador al ejecutar los comandos: \begin{center}$ pip \;install\; xlwt$ \\
+%\end{center}seguido de: 
+%\begin{center}
+$ pip \;install \;pyserial$\end{center}
+
+\item Abrir una de las  carpetas de archivos  anexada con la entrega del presente trabajo, buscar el archivo titulado ``Aire-Arduino-Excel'' o ``RPM-Arduino-Excel'' según la variable a monitorear. 
+
+\item  Ubicar en la línea 4 ``...SerialToExcel(``<puerto>'',57600)'' donde en la función se tienen dos argumentos uno el puerto de lectura el cual se recomienda obtener directamente del IDE de Arduino Herramientas -> Puerto y copiar y sustituir por <puerto>en la función, y el segundo argumento que indica la velocidad de la comunicación serial  en baudios(57600 para cualquier variable ).
+\item Ubicar en la línea 9 ``...setRecordsNumber(<Número de Registros en hoja de cálculo>)'', asignar el número de valores que se requieren registrar para el posterior tratamiento de datos ya en el ordenador.
+\item Ubicar línea 12 y en el argumento de la función ``...writeFile(``<NombreArchivo>.xls'')'' y modificar el nombre del archivo a  generar  en la misma carpeta. (NOTA: No modificar la extensión del archivo ``xls''.)
+
+\item Correr el programa, esperar que termine la recopilación de datos y se puede consultar y tratar los valores en la hoja de cálculo en Excel ahora creado automáticamente en la misma carpeta. 
+
+\end{enumerate}
+
+
+\newpage
+	\section{Código del sistema de agitación}
+\paragraph{Código Computacional para la medición de las RPM del Motor 1 }.
+\begin{figure}[H]
+\centering
+\includegraphics[height=.91\textheight]{Photos/code/M1-1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=.73\textheight]{Photos/code/M1-2}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.4\textheight]{Photos/code/M1-3}
+\caption{Código computacional implementado para cuantificar las RPM en el sistema del motor 1 }
+\end{figure}
+
+
+\newpage
+
+\paragraph{Código Computacional para la medición de las RPM del Motor 2 }.
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.91\textheight]{Photos/code/M2-1}
+\end{figure}
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.73\textheight]{Photos/code/M2-2}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.37\textheight]{Photos/code/M2-3}
+\caption{Código computacional implementado para cuantificar las RPM en el sistema del motor 2  }
+\end{figure}
+
+\newpage
+	\section{Código del sistema aereador }
+	\paragraph{Código Computacional para la medición del caudal de aire}.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.85\textheight]{Photos/code/A-1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.77\textheight]{Photos/code/A-2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=0.37\textheight]{Photos/code/A-3}
+\caption{Código computacional implementado para cuantificar el caudal de aire. }
+\end{figure}
+ %\newpage
+
+
+\section{Lista de materiales propuestos.}
+\begin{table}[H]
+\begin{center}
+\caption{Lista de materiales propuestos a usar.  }
+ \begin{tabular}{||c c c c||} 
+ \hline
+ Cantidad & Artículo  & Unitario  & Total (MXN) \\ [0.5ex] 
+ \hline\hline
+ 3 &  LCD 16X2 & 41.38 & 124.14 \\ 
+ \hline
+ 1 & Cables Dupont Largos m-m & 15.52 & 15.52 \\
+ \hline
+1 & Cables Dupont Largos h-m & 15.52 & 15.52 \\
+ \hline
+ 2 & Modulo KY-003 Sensor Magnético Hall & 13.79 & 13.79 \\
+\hline
+ 2 & UNO R3 con cable USB   & 136.21 & 272.42 \\
+%\hline 
+%1 & Arduino Nano    & 285 & 285 \\
+\hline
+ 2 & Carcasa de Acrilico para Arduino Uno R3 & 38.79 & 77.58 \\
+\hline
+ 1 & Sensor De Flujo De Agua YF-S401 & 95.69 &95.69  \\
+\hline
+ 2 & Controlador de Velocidad 10-36V 5A & 87.93 & 175.86 \\
+
+\hline
+ 2  &  Motor 775 Eje Circular Alta Velocidad & 204.31 & 408.62 \\ 
+
+\hline
+ 2 &  Fuente 12V 1A con Conector Barril & 53.45& 106.9\\ 
+\hline
+ 2 &  Fuente 5V 2A con Conector Barril & 58.62& 117.24\\ 
+
+\hline
+ 1 paq. &  Termofit 8 diferentes tamaños & 67.24 & 67.24 \\ 
+\hline
+ 2 &  Imanes de neodimio  &22.5 & 45  \\ 
+\hline
+ 1 &  Tacómetro digital  & -  & - \\ 
+\hline
+ 1 &  Flujómetro  modelo LZQ-7 & 335  & 335\\ 
+\hline
+ 1 &  Compresor modelo W-1557  marca Mikel's & 220 &220 \\ 
+\hline
+ 3 & Cajas de Acrílico & 120 & 360  \\ 
+\hline
+ 2 paq.  & Velcro &12 &24 \\ 
+\hline
+ 1  & Sellador para PVC  &20 &20  \\ 
+%\hline
+% \end{tabular}
+%\end{center}
+%\end{table}
+%
+%
+%\newpage
+%
+%\begin{table}[H]
+%\begin{center}
+% \begin{tabular}{||c c c c||} 
+
+\hline
+% Cantidad & Artículo  & Unitario  & Total \\ [0.5ex] 
+% \hline\hline
+3m & Tuberia de PVC  & 50 &50 \\ 
+\hline
+ 2 & Tablas de polímero de alta densidad &350 &700 \\ 
+\hline
+
+ - & Tornillería y tuercas   &  29&29 \\ 
+%\hline
+ %4 & Reducciónes de Cobre   & & \\
+\hline
+ 1 & Fuente de poder 12v 10 A   &600 &600 \\ 
+\hline
+ 18m  & Cable para alimentación    &3 &54 \\ 
+\hline
+ 4m  & Manguera    & 15&60 \\ 
+\hline
+ 2  & Eje y aspas (Ac. Inox 303.)    & 500 &1000 \\ 
+\hline
+   & TOTAL APROXIMADO &  &4987.52 \\ 
+
+
+
+ \hline\hline
+
+\end{tabular}
+\end{center}
+
+\end{table}
+\newpage
+
+
+
+
+	
+%bibliografia \cite {nombre corto}
+	\bibliographystyle{abbrv}
+	\bibliography{Biblio}
+
+%\end{paracol}
+%	\section*{Comentarios generales del alumno }
+	%Durante el desarrollo del  presente proyecto,  destaca el aprender cosas nuevas y muy útiles,  a pesar de ser una una tarea laboriosa y complicada por estar  fuera de las instalaciones de la FQ, sin embargo agradezco la disposición y  apoyo completo por parte del M en C. Antonio Huerta Cerdán,  tanto por  brindar de manera completa todo el material necesario para la construcción y por la orientación en todo momento   en la toma de decisiones críticas para el proyecto, así como la constante comunicación  mediante diferentes medios de contacto en la programación semanal de las sesiones de avance y discusión establecidas desde el inicio. \\[2cm]
+
+%	\begin{center}
+%	\line (1,0){200}\\
+%{\textsc Vargas Quiroz Italo }
+	%\end{center}
+
+
+
+											\end{document}
